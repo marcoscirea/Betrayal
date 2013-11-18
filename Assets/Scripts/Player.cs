@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 	Player next_player;
 	Deck deck;
 	GameObject spotlight;
+	World world = null;
 
 	// Use this for initialization
 	void Start () {
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour {
 
 		//get deck
 		deck=GameObject.Find("Deck").GetComponent<Deck>();
+
+		world=GameObject.Find("World").GetComponent<World>();
 	}
 	
 	// Update is called once per frame
@@ -86,18 +89,46 @@ public class Player : MonoBehaviour {
 		//reorder cards 
 		for (int i=0; i< inventory.Count; i++){
 			GameObject tmp = (GameObject) inventory[i];
+			//old version
+//			if (gameObject.name=="P1"){
+//				tmp.transform.position= new Vector3((- (float) inventory.Count/2)+i+0.5f,transform.position.y-1, 0);
+//			}
+//			if (gameObject.name=="P2"){
+//				tmp.transform.position= new Vector3(transform.position.x-1,(- (float) inventory.Count/2)+i+0.5f, 0);
+//			}
+//			if (gameObject.name=="P3"){
+//				tmp.transform.position= new Vector3((- (float) inventory.Count/2)+i+0.5f,transform.position.y+1, 0);
+//			}
+//			if (gameObject.name=="P4"){
+//				tmp.transform.position= new Vector3(transform.position.x+1,(- (float) inventory.Count/2)+i+0.5f, 0);
+//			}
 			if (gameObject.name=="P1"){
-				tmp.transform.position= new Vector3((- (float) inventory.Count/2)+i+0.5f,transform.position.y-1, 0);
+				tmp.transform.position= new Vector3(world.cards[(world.side-1)/2, 0].transform.position.x+(- (float) inventory.Count/2)+i+0.5f,world.cards[(world.side-1)/2, 0].transform.position.y-1, 0);
 			}
 			if (gameObject.name=="P2"){
-				tmp.transform.position= new Vector3(transform.position.x-1,(- (float) inventory.Count/2)+i+0.5f, 0);
+				tmp.transform.position= new Vector3(world.cards[0, (world.side-1)/2].transform.position.x-1,world.cards[0, (world.side-1)/2].transform.position.y+(- (float) inventory.Count/2)+i+0.5f, 0);
 			}
 			if (gameObject.name=="P3"){
-				tmp.transform.position= new Vector3((- (float) inventory.Count/2)+i+0.5f,transform.position.y+1, 0);
+				tmp.transform.position= new Vector3(world.cards[(world.side-1)/2, world.side-1].transform.position.x+(- (float) inventory.Count/2)+i+0.5f,world.cards[(world.side-1)/2, world.side-1].transform.position.y+1, 0);
 			}
 			if (gameObject.name=="P4"){
-				tmp.transform.position= new Vector3(transform.position.x+1,(- (float) inventory.Count/2)+i+0.5f, 0);
+				tmp.transform.position= new Vector3(world.cards[world.side-1, (world.side-1)/2].transform.position.x+1,world.cards[world.side-1, (world.side-1)/2].transform.position.y+(- (float) inventory.Count/2)+i+0.5f, 0);
 			}
+		}
+	}
+
+	public void moveTo(Transform tr){
+		if (gameObject.name=="P1"){
+			transform.position = tr.position + new Vector3(-0.25f, 0.25f,-1f);
+		}
+		if (gameObject.name=="P2"){
+			transform.position = tr.position + new Vector3(0.25f, 0.25f,-1f);
+		}
+		if (gameObject.name=="P3"){
+			transform.position = tr.position + new Vector3(0.25f, -0.25f,-1f);
+		}
+		if (gameObject.name=="P4"){
+			transform.position = tr.position + new Vector3(-0.25f, -0.25f,-1f);
 		}
 	}
 }

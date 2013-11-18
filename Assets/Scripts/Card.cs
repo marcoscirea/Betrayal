@@ -15,6 +15,7 @@ public class Card : MonoBehaviour {
 	public bool left;
 	public float connectionPercentage=0.6f;
 
+
 	// Use this for initialization
 	void Start () {
 		world = GameObject.Find("World").GetComponent<World>();

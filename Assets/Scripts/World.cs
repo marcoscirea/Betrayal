@@ -6,6 +6,10 @@ public class World : MonoBehaviour {
 	public GameObject[,] cards;
 	public GameObject card;
 	public int side = 3;
+	Player p1;
+	Player p2;
+	Player p3;
+	Player p4;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +28,16 @@ public class World : MonoBehaviour {
 		cards[(int) side/2, (int) side/2].GetComponent<Card>().isHome();
 
 		GameObject.Find("Main Camera").transform.position= new Vector3(side/2, side/2, -10f);
+
+		//put players on home
+		p1= GameObject.Find("P1").GetComponent<Player>();
+		p1.moveTo(cards[(int)side/2, (int)side/2].transform);
+		p2= GameObject.Find("P2").GetComponent<Player>();
+		p2.moveTo(cards[(int)side/2, (int)side/2].transform);
+		p3= GameObject.Find("P3").GetComponent<Player>();
+		p3.moveTo(cards[(int)side/2, (int)side/2].transform);
+		p4= GameObject.Find("P4").GetComponent<Player>();
+		p4.moveTo(cards[(int)side/2, (int)side/2].transform);
 
 	}
 	
