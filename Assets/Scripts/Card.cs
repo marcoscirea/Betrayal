@@ -27,28 +27,30 @@ public class Card : MonoBehaviour {
 	}
 
 	void OnMouseUpAsButton () {
-		string dir = world.accessible(x,y);
-		//Debug.Log(dir);
-		if ( dir != "none"){
-			randomConnections();
-			if (dir == "up")
-				up=true;
-			if (dir == "down")
-				down=true;
-			if (dir == "right")
-				right=true;
-			if (dir == "left")
-				left=true;
-			renderer.enabled=true;
-			if (!up || y==world.side-1)
-				gameObject.transform.FindChild("Up").renderer.enabled=true;
-			if (!down || y==0)
-				gameObject.transform.FindChild("Down").renderer.enabled=true;
-			if (!right || x==world.side-1)
-				gameObject.transform.FindChild("Right").renderer.enabled=true;
-			if (!left || x==0)
-				gameObject.transform.FindChild("Left").renderer.enabled=true;
-			on=true;
+		if (on==false){
+			string dir = world.accessible(x,y);
+			//Debug.Log(dir);
+			if ( dir != "none"){
+				randomConnections();
+				if (dir == "up")
+					up=true;
+				if (dir == "down")
+					down=true;
+				if (dir == "right")
+					right=true;
+				if (dir == "left")
+					left=true;
+				renderer.enabled=true;
+				if (!up || y==world.side-1)
+					gameObject.transform.FindChild("Up").renderer.enabled=true;
+				if (!down || y==0)
+					gameObject.transform.FindChild("Down").renderer.enabled=true;
+				if (!right || x==world.side-1)
+					gameObject.transform.FindChild("Right").renderer.enabled=true;
+				if (!left || x==0)
+					gameObject.transform.FindChild("Left").renderer.enabled=true;
+				on=true;
+			}
 		}
 	}
 
