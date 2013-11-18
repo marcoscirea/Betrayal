@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Card : MonoBehaviour {
 
-	bool home=false;
+	//bool home=false;
 	public Material mat_home;
-	public bool active = false;
+	public bool on = false;
 	public World world;
 	public float x;
 	public float y;
@@ -27,7 +27,7 @@ public class Card : MonoBehaviour {
 
 	void OnMouseUpAsButton () {
 		string dir = world.accessible(x,y);
-		Debug.Log(dir);
+		//Debug.Log(dir);
 		if ( dir != "none"){
 			randomConnections();
 			if (dir == "up")
@@ -47,15 +47,15 @@ public class Card : MonoBehaviour {
 				gameObject.transform.FindChild("Right").renderer.enabled=true;
 			if (!left || x==0)
 				gameObject.transform.FindChild("Left").renderer.enabled=true;
-			active=true;
+			on=true;
 		}
 	}
 
 	public void isHome(){
-		home=true;
+		//home=true;
 		renderer.material=mat_home;
 		renderer.enabled=true;
-		active = true;
+		on = true;
 		up = true;
 		down = true;
 		right= true;
