@@ -11,14 +11,14 @@ public class PlayerLight : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (up && transform.position.z>=-2f){
+		if (up && transform.position.z>=-3f){
 			transform.position -= new Vector3(0,0,Time.deltaTime);
 		}
 		else{
-			if (transform.position.z <-2f) 
+			if (transform.position.z <-3f) 
 				up = false;
 			transform.position += new Vector3(0,0,Time.deltaTime);
-			if (transform.position.z>=-1f)
+			if (transform.position.z>=-2f)
 				up=true;
 		}
 	}

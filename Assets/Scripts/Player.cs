@@ -13,15 +13,18 @@ public class Player : MonoBehaviour {
 	 * turn ends when player interacts with world card or attacks monster/player
 	 */
 
-	public int survival=3;
-	public int exploration=3;
-	public int might=3;
+	public static int survival=3;
+	public static int exploration=3;
+	public static int might=3;
+	int moves= exploration;
 	public ArrayList inventory = new ArrayList();
 	public bool isActive=false;
 	Player next_player;
 	Deck deck;
 	GameObject spotlight;
 	World world = null;
+	public int x;
+	public int y;
 
 	// Use this for initialization
 	void Start () {
@@ -79,10 +82,11 @@ public class Player : MonoBehaviour {
 		refresh ();
 	}
 
-	void endTurn(){
+	public void endTurn(){
 		//Debug.Log("next turn");
 		isActive=false;
 		next_player.isActive=true;
+		moves=exploration;
 	}
 
 	void refresh(){
@@ -117,7 +121,11 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void moveTo(Transform tr){
+	public void moveTo(Transform tr, int nx, int ny){
+
+		x=nx;
+		y=ny;
+
 		if (gameObject.name=="P1"){
 			transform.position = tr.position + new Vector3(-0.25f, 0.25f,-1f);
 		}
@@ -129,6 +137,12 @@ public class Player : MonoBehaviour {
 		}
 		if (gameObject.name=="P4"){
 			transform.position = tr.position + new Vector3(-0.25f, -0.25f,-1f);
+		}
+
+		moves--;
+		if(moves==0){
+			moves=exploration;
+			endTurn();
 		}
 	}
 }

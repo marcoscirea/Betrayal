@@ -50,7 +50,13 @@ public class Card : MonoBehaviour {
 				if (!left || x==0)
 					gameObject.transform.FindChild("Left").renderer.enabled=true;
 				on=true;
+
+				world.activePlayer().endTurn();
 			}
+		}
+		else {
+			if(isClose(world.activePlayer()))
+				world.activePlayer().moveTo(transform, (int)x, (int)y);
 		}
 	}
 
@@ -78,4 +84,16 @@ public class Card : MonoBehaviour {
 				else 
 					return false;
 			}
+
+	bool isClose(Player p){
+		if (p.x == x){
+			if (p.y == y-1 || p.y == y+1)
+				return true;
+		}
+		if (p.y == y){
+			if (p.x == x-1 || p.x == x+1)
+				return true;
+		}
+		return false;
+	}
 }

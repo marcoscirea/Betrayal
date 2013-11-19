@@ -6,10 +6,12 @@ public class World : MonoBehaviour {
 	public GameObject[,] cards;
 	public GameObject card;
 	public int side = 3;
-	Player p1;
-	Player p2;
-	Player p3;
-	Player p4;
+	public Player p1;
+	public Player p2;
+	public Player p3;
+	public Player p4;
+	public Deck deck;
+	bool startingCards=true;
 
 	// Use this for initialization
 	void Start () {
@@ -28,22 +30,30 @@ public class World : MonoBehaviour {
 		cards[(int) side/2, (int) side/2].GetComponent<Card>().isHome();
 
 		GameObject.Find("Main Camera").transform.position= new Vector3(side/2, side/2, -10f);
+		deck = GameObject.Find("Deck").GetComponent<Deck>();
 
 		//put players on home
 		p1= GameObject.Find("P1").GetComponent<Player>();
-		p1.moveTo(cards[(int)side/2, (int)side/2].transform);
+		p1.moveTo(cards[(int)side/2, (int)side/2].transform, (int)side/2, (int)side/2);
 		p2= GameObject.Find("P2").GetComponent<Player>();
-		p2.moveTo(cards[(int)side/2, (int)side/2].transform);
+		p2.moveTo(cards[(int)side/2, (int)side/2].transform, (int)side/2, (int)side/2);
 		p3= GameObject.Find("P3").GetComponent<Player>();
-		p3.moveTo(cards[(int)side/2, (int)side/2].transform);
+		p3.moveTo(cards[(int)side/2, (int)side/2].transform, (int)side/2, (int)side/2);
 		p4= GameObject.Find("P4").GetComponent<Player>();
-		p4.moveTo(cards[(int)side/2, (int)side/2].transform);
+		p4.moveTo(cards[(int)side/2, (int)side/2].transform, (int)side/2, (int)side/2);
+
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (startingCards) {
+			startingCards=false;
+			deck.giveCards(p1, 3);
+			deck.giveCards(p2, 3);
+			deck.giveCards(p3, 3);
+			deck.giveCards(p4, 3);
+		}
 	}
 
 	GameObject newCard(float x, float y){
@@ -63,5 +73,17 @@ public class World : MonoBehaviour {
 		if (x>0 && cards[(int)x-1,(int)y].GetComponent<Card>().on && cards[(int) x-1,(int)y].GetComponent<Card>().right)
 			return "left";
 		return "none";
+	}
+
+	public Player activePlayer(){
+		if (p1.isActive)
+			return p1;
+		if (p2.isActive)
+			return p2;
+		if (p3.isActive)
+			return p3;
+		if (p4.isActive)
+			return p4;
+		return null;
 	}
 }
