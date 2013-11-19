@@ -13,6 +13,8 @@ public class World : MonoBehaviour {
 	public Deck deck;
 	bool startingCards=true;
 
+	public bool machinePresent = false;
+
 	// Use this for initialization
 	void Start () {
 		cards = new GameObject[side,side];

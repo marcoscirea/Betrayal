@@ -15,10 +15,14 @@ public class Card : MonoBehaviour {
 	public bool left;
 	public float connectionPercentage=0.6f;
 
+	GameObject text;
+	string type;
+
 
 	// Use this for initialization
 	void Start () {
 		world = GameObject.Find("World").GetComponent<World>();
+		text = gameObject.transform.FindChild("Text").gameObject;
 	}
 	
 	// Update is called once per frame
@@ -27,7 +31,9 @@ public class Card : MonoBehaviour {
 	}
 
 	void OnMouseUpAsButton () {
-		if (on==false){
+		//for testing
+		if (on==false && isClose(world.activePlayer())){
+		//if (on==false){
 			string dir = world.accessible(x,y);
 			//Debug.Log(dir);
 			if ( dir != "none"){
@@ -50,6 +56,8 @@ public class Card : MonoBehaviour {
 				if (!left || x==0)
 					gameObject.transform.FindChild("Left").renderer.enabled=true;
 				on=true;
+
+				setType();
 
 				world.activePlayer().endTurn();
 			}
@@ -95,5 +103,42 @@ public class Card : MonoBehaviour {
 				return true;
 		}
 		return false;
+	}
+
+	void setType(){
+		float v = Random.value;
+		if (v <=0.6){
+			if (v<=0.3){
+				//empty terrain
+				type="empty";
+				//text.GetComponent<TextMesh>().text="M";
+				//text.SetActive(true);
+			}
+			else {
+				//scavenging terrain
+				type="scav";
+				text.GetComponent<TextMesh>().text="S";
+				text.SetActive(true);
+			}
+		}
+		else {
+			if (v<=0.9){
+				//trouble terrain
+				type="trouble";
+				text.GetComponent<TextMesh>().text="T";
+				text.SetActive(true);
+			}
+			else {
+				//machine
+				if (world.machinePresent)
+					setType();
+				else {
+					world.machinePresent=true;
+					type="machine";
+					text.GetComponent<TextMesh>().text="M";
+					text.SetActive(true);
+				}
+			}
+		}
 	}
 }
