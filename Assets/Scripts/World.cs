@@ -44,6 +44,9 @@ public class World : MonoBehaviour {
 		p4= GameObject.Find("P4").GetComponent<Player>();
 		p4.moveTo(cards[(int)side/2, (int)side/2].transform, (int)side/2, (int)side/2);
 
+		//activate player 1
+		p1.isActive=true;
+		p1.updateStatus();
 
 	}
 	
@@ -66,13 +69,17 @@ public class World : MonoBehaviour {
 	}
 
 	public string accessible(float x, float y){
-		if (y<side-1 && cards[(int) x,(int)y+1].GetComponent<Card>().on && cards[(int) x,(int)y+1].GetComponent<Card>().down)
+		if (y<side-1 && cards[(int) x,(int)y+1].GetComponent<Card>().on && cards[(int) x,(int)y+1].GetComponent<Card>().down
+		    && activePlayer().x==x && activePlayer().y == y+1)
 			return "up";
-		if (x<side-1 && cards[(int)x+1,(int)y].GetComponent<Card>().on && cards[(int) x+1,(int)y].GetComponent<Card>().left)
+		if (x<side-1 && cards[(int)x+1,(int)y].GetComponent<Card>().on && cards[(int) x+1,(int)y].GetComponent<Card>().left
+		    && activePlayer().x==x+1 && activePlayer().y == y)
 			return "right";
-		if (y>0 && cards[(int)x,(int)y-1].GetComponent<Card>().on && cards[(int) x,(int)y-1].GetComponent<Card>().up)
+		if (y>0 && cards[(int)x,(int)y-1].GetComponent<Card>().on && cards[(int) x,(int)y-1].GetComponent<Card>().up
+		    && activePlayer().x==x && activePlayer().y == y-1)
 			return "down";
-		if (x>0 && cards[(int)x-1,(int)y].GetComponent<Card>().on && cards[(int) x-1,(int)y].GetComponent<Card>().right)
+		if (x>0 && cards[(int)x-1,(int)y].GetComponent<Card>().on && cards[(int) x-1,(int)y].GetComponent<Card>().right
+		    && activePlayer().x==x-1 && activePlayer().y == y)
 			return "left";
 		return "none";
 	}

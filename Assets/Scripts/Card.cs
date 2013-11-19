@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Card : MonoBehaviour {
 
-	//bool home=false;
+	bool ishome=false;
 	public Material mat_home;
 	public bool on = false;
 	public World world;
@@ -15,19 +15,29 @@ public class Card : MonoBehaviour {
 	public bool left;
 	public float connectionPercentage=0.6f;
 
-	GameObject text;
+	GameObject type_obj;
 	string type;
 
+	public Sprite home;
+	public Sprite badlands;
+	public Sprite church;
+	public Sprite hospital;
+	public Sprite house;
+	public Sprite machine;
 
 	// Use this for initialization
 	void Start () {
 		world = GameObject.Find("World").GetComponent<World>();
-		text = gameObject.transform.FindChild("Text").gameObject;
+		type_obj = gameObject.transform.FindChild("Type").gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (ishome){
+			
+			type_obj.GetComponent<SpriteRenderer>().sprite=home;
+			type_obj.SetActive(true);
+		}
 	}
 
 	void OnMouseUpAsButton () {
@@ -59,18 +69,19 @@ public class Card : MonoBehaviour {
 
 				setType();
 
+				world.activePlayer().moveTo(transform, x,y);
+
 				world.activePlayer().endTurn();
 			}
 		}
 		else {
-			if(isClose(world.activePlayer()))
+			if(isClose(world.activePlayer()) && connection( world.activePlayer().x,  world.activePlayer().y))
 				world.activePlayer().moveTo(transform, (int)x, (int)y);
 		}
 	}
 
 	public void isHome(){
-		//home=true;
-		renderer.material=mat_home;
+		ishome=true;
 		renderer.enabled=true;
 		on = true;
 		up = true;
@@ -117,16 +128,33 @@ public class Card : MonoBehaviour {
 			else {
 				//scavenging terrain
 				type="scav";
-				text.GetComponent<TextMesh>().text="S";
-				text.SetActive(true);
+				//text.GetComponent<TextMesh>().text="S";
+				//text.SetActive(true);
+				float tmp = Random.value;
+				if (tmp<=0.33){
+					type_obj.GetComponent<SpriteRenderer>().sprite=house;
+					type_obj.SetActive(true);
+				}
+				else {
+					if (tmp<=0.66){
+						type_obj.GetComponent<SpriteRenderer>().sprite=hospital;
+						type_obj.SetActive(true);
+					}
+					else {
+						type_obj.GetComponent<SpriteRenderer>().sprite=church;
+						type_obj.SetActive(true);
+					}
+				}
 			}
 		}
 		else {
 			if (v<=0.9){
 				//trouble terrain
 				type="trouble";
-				text.GetComponent<TextMesh>().text="T";
-				text.SetActive(true);
+				//text.GetComponent<TextMesh>().text="T";
+				//text.SetActive(true);
+				type_obj.GetComponent<SpriteRenderer>().sprite=badlands;
+				type_obj.SetActive(true);
 			}
 			else {
 				//machine
@@ -135,10 +163,32 @@ public class Card : MonoBehaviour {
 				else {
 					world.machinePresent=true;
 					type="machine";
-					text.GetComponent<TextMesh>().text="M";
-					text.SetActive(true);
+					//text.GetComponent<TextMesh>().text="M";
+					//text.SetActive(true);
+					type_obj.GetComponent<SpriteRenderer>().sprite=machine;
+					type_obj.SetActive(true);
 				}
 			}
 		}
+	}
+
+	bool connection(float x1, float y1){
+		if (x1 == x+1F && right && world.cards[(int)x1,(int)y1].GetComponent<Card>().left){
+			//player arrives from the right
+			return true;
+		}
+		if (x1 == x-1f && left && world.cards[(int)x1,(int)y1].GetComponent<Card>().right){
+			//player arrives from the left
+			return true;
+		}
+		if (y1 == y+1f && up && world.cards[(int)x1,(int)y1].GetComponent<Card>().down){
+			//player arrives from up
+			return true;
+		}
+		if (y1 == y-1f && down && world.cards[(int)x1,(int)y1].GetComponent<Card>().up){
+			//player arrives from down
+			return true;
+		}
+		return false;
 	}
 }

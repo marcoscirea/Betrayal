@@ -25,6 +25,7 @@ public class Player : MonoBehaviour {
 	World world = null;
 	public int x;
 	public int y;
+	GameObject status;
 
 	// Use this for initialization
 	void Start () {
@@ -53,6 +54,8 @@ public class Player : MonoBehaviour {
 		deck=GameObject.Find("Deck").GetComponent<Deck>();
 
 		world=GameObject.Find("World").GetComponent<World>();
+
+		status=GameObject.Find("Status");
 	}
 	
 	// Update is called once per frame
@@ -86,6 +89,7 @@ public class Player : MonoBehaviour {
 		//Debug.Log("next turn");
 		isActive=false;
 		next_player.isActive=true;
+		next_player.updateStatus();
 		moves=exploration;
 	}
 
@@ -121,6 +125,10 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	public void moveTo(Transform tr, float nx, float ny){
+		moveTo(tr, (int)nx, (int)ny);
+	}
+
 	public void moveTo(Transform tr, int nx, int ny){
 
 		x=nx;
@@ -144,5 +152,13 @@ public class Player : MonoBehaviour {
 			moves=exploration;
 			endTurn();
 		}
+	}
+
+	public void updateStatus(){
+		status.renderer.material=renderer.material;
+		status.transform.FindChild("Name").GetComponent<TextMesh>().text=name;
+		status.transform.FindChild("Exploration").GetComponent<TextMesh>().text="Expl: "+exploration;
+		status.transform.FindChild("Survival").GetComponent<TextMesh>().text="Surv: "+survival;
+		status.transform.FindChild("Might").GetComponent<TextMesh>().text="Might: "+might;
 	}
 }
