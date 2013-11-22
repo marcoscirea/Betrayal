@@ -17,6 +17,7 @@ public class Card : MonoBehaviour {
 
 	GameObject type_obj;
 	string type;
+	bool type_on = false;
 
 	public Sprite home;
 	public Sprite badlands;
@@ -38,11 +39,12 @@ public class Card : MonoBehaviour {
 			type_obj.GetComponent<SpriteRenderer>().sprite=home;
 			type_obj.SetActive(true);
 		}
+
 	}
 
 	void OnMouseUpAsButton () {
 		//for testing
-		if (on==false && isClose(world.activePlayer())){
+		if (!world.activePlayer().wait && on==false && isClose(world.activePlayer())){
 		//if (on==false){
 			string dir = world.accessible(x,y);
 			//Debug.Log(dir);
@@ -71,12 +73,23 @@ public class Card : MonoBehaviour {
 
 				world.activePlayer().moveTo(transform, x,y);
 
-				world.activePlayer().endTurn();
+				world.options.transform.FindChild("Opt2").GetComponent<Options2>().new_card=true;
+
+				//Srop player from moving when on new tile if there are options
+				if (type!="empty")
+					world.activePlayer().wait=true;
+				else
+					world.activePlayer().endTurn();
 			}
 		}
 		else {
-			if(isClose(world.activePlayer()) && connection( world.activePlayer().x,  world.activePlayer().y))
+			if(!world.activePlayer().wait && isClose(world.activePlayer()) && connection( world.activePlayer().x,  world.activePlayer().y))
 				world.activePlayer().moveTo(transform, (int)x, (int)y);
+		}
+
+		//activate interface if there is need
+		if (on && type_on){
+			activateOptions(type);
 		}
 	}
 
@@ -170,6 +183,8 @@ public class Card : MonoBehaviour {
 				}
 			}
 		}
+		if (type!="empty")
+			type_on=true;
 	}
 
 	bool connection(float x1, float y1){
@@ -190,5 +205,20 @@ public class Card : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+
+	public void activateOptions(string type){
+		world.options.SetActive(true);
+		switch (type){
+		case "scav":
+			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="scavenge";
+			break;
+		case "trouble":
+			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="fight";
+			break;
+		case "machine":
+			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="activate";
+			break;
+		}
 	}
 }

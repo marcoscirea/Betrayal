@@ -5,6 +5,7 @@ public class World : MonoBehaviour {
 
 	public GameObject[,] cards;
 	public GameObject card;
+	public GameObject options;
 	public int side = 3;
 	public Player p1;
 	public Player p2;
@@ -12,6 +13,7 @@ public class World : MonoBehaviour {
 	public Player p4;
 	public Deck deck;
 	bool startingCards=true;
+	public Transform center;
 
 	public bool machinePresent = false;
 
@@ -44,14 +46,24 @@ public class World : MonoBehaviour {
 		p4= GameObject.Find("P4").GetComponent<Player>();
 		p4.moveTo(cards[(int)side/2, (int)side/2].transform, (int)side/2, (int)side/2);
 
-		//activate player 1
-		p1.isActive=true;
-		p1.updateStatus();
 
+		//define center
+		center = cards[(int)side/2, (int)side/2].transform;
+
+		//center Options
+		options = GameObject.Find("Options");
+		options.transform.position=GameObject.Find("Status").transform.position + new Vector3(0,2,-2);
+		options.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (activePlayer()==null){
+			//activate player 1
+			p1.isActive=true;
+			p1.updateStatus();
+		}
+
 		if (startingCards) {
 			startingCards=false;
 			deck.giveCards(p1, 3);

@@ -13,10 +13,10 @@ public class Player : MonoBehaviour {
 	 * turn ends when player interacts with world card or attacks monster/player
 	 */
 
-	public static int survival=3;
-	public static int exploration=3;
-	public static int might=3;
-	int moves= exploration;
+	public  int survival=3;
+	public  int exploration=3;
+	public  int might=3;
+	int moves;
 	public ArrayList inventory = new ArrayList();
 	public bool isActive=false;
 	Player next_player;
@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 	public int x;
 	public int y;
 	GameObject status;
+	public bool wait =false;
 
 	// Use this for initialization
 	void Start () {
@@ -56,6 +57,8 @@ public class Player : MonoBehaviour {
 		world=GameObject.Find("World").GetComponent<World>();
 
 		status=GameObject.Find("Status");
+
+		moves= exploration;
 	}
 	
 	// Update is called once per frame
@@ -91,6 +94,8 @@ public class Player : MonoBehaviour {
 		next_player.isActive=true;
 		next_player.updateStatus();
 		moves=exploration;
+		wait=false;
+		world.options.SetActive(false);
 	}
 
 	void refresh(){
@@ -160,5 +165,10 @@ public class Player : MonoBehaviour {
 		status.transform.FindChild("Exploration").GetComponent<TextMesh>().text="Expl: "+exploration;
 		status.transform.FindChild("Survival").GetComponent<TextMesh>().text="Surv: "+survival;
 		status.transform.FindChild("Might").GetComponent<TextMesh>().text="Might: "+might;
+
+		
+		world.options.transform.FindChild("Opt1").renderer.material=world.activePlayer().renderer.material;
+		world.options.transform.FindChild("Opt2").renderer.material=world.activePlayer().renderer.material;
+		world.options.transform.FindChild("Opt3").renderer.material=world.activePlayer().renderer.material;
 	}
 }
