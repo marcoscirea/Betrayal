@@ -27,6 +27,7 @@ public class Player : MonoBehaviour {
 	public int y;
 	GameObject status;
 	public bool wait =false;
+	Item equipped;
 
 	// Use this for initialization
 	void Start () {

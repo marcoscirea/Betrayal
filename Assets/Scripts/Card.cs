@@ -19,6 +19,8 @@ public class Card : MonoBehaviour {
 	string type;
 	bool type_on = false;
 
+	public bool expired=false;
+
 	public Sprite home;
 	public Sprite badlands;
 	public Sprite church;
@@ -90,7 +92,7 @@ public class Card : MonoBehaviour {
 		}
 
 		//activate interface if there is need
-		if (on && type_on){
+		if (on && type_on && !expired){
 			activateOptions(type);
 		}
 

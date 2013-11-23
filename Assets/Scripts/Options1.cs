@@ -36,6 +36,9 @@ public class Options1 : MonoBehaviour {
 			//world.activePlayer().endTurn();
 			break;
 		}
+		Player p1 = world.activePlayer();
+		Card c1 = world.cards[p1.x,p1.y].GetComponent<Card>();
+		c1.expired=true;
 		world.activePlayer().endTurn();
 		world.options.SetActive(false);
 	}
