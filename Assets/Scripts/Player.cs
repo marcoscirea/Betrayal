@@ -29,6 +29,8 @@ public class Player : MonoBehaviour {
 	GameObject status;
 	public bool wait =false;
 	public GameObject equipped;
+	public int food = 2;
+	bool hungry = false;
 
 	// Use this for initialization
 	void Start () {
@@ -75,6 +77,12 @@ public class Player : MonoBehaviour {
 			else
 				equipped.SetActive(false);
 		}
+
+		isHungry();
+
+		if (isActive){
+			world.food_gui.text = "Food: "+food;
+		}
 	}
 
 	public void takeItem(GameObject item){
@@ -104,6 +112,8 @@ public class Player : MonoBehaviour {
 			refresh ();
 		}
 		else {
+			food += item.GetComponent<Item>().value;
+
 			inventory.Remove(item);
 
 			Destroy(item);
@@ -116,11 +126,13 @@ public class Player : MonoBehaviour {
 		//Debug.Log("next turn");
 		isActive=false;
 		next_player.isActive=true;
+		//next_player.isHungry();
 		next_player.updateStatus();
 		moves=exploration;
 		wait=false;
 		world.monster.SetActive(false);
 		world.options.SetActive(false);
+		food--;
 	}
 
 	 public void refresh(){
@@ -202,5 +214,21 @@ public class Player : MonoBehaviour {
 			Destroy(c);
 		}
 		inventory = new ArrayList();
+	}
+
+	public void isHungry(){
+		if (food<=0){
+			wait=true;
+			hungry = true;
+			//Debug.Log(name + " is hungry");
+			if (inventory.Count == 0 && Random.value < 0.5f)
+				food = 2;
+		}
+		else {
+			if (hungry){
+				wait=false;
+				hungry= false;
+			}
+		}
 	}
 }

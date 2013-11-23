@@ -15,6 +15,7 @@ public class World : MonoBehaviour {
 	bool startingCards=true;
 	public Transform center;
 	public GameObject monster;
+	public TextMesh food_gui;
 
 	public bool machinePresent = false;
 
@@ -58,6 +59,9 @@ public class World : MonoBehaviour {
 
 		//initialize monster
 		monster = GameObject.Find("Monster");
+
+		//find the food gui
+		food_gui = GameObject.Find("Food").GetComponent<TextMesh>();
 	}
 	
 	// Update is called once per frame
