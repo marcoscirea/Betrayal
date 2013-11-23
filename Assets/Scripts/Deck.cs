@@ -50,10 +50,12 @@ public class Deck : MonoBehaviour {
 
 	public void giveCards(Player p, int n){
 		//Debug.Log("give");
-		for (int i=0; i<n; i++){
-				GameObject new_card = (GameObject) Instantiate(item);
-				p.takeItem(new_card);
+		if (p.inventory.Count < p.max_cards){
+			for (int i=0; i<n; i++){
+					GameObject new_card = (GameObject) Instantiate(item);
+					p.takeItem(new_card);
 
+			}
 		}
 	}
 }

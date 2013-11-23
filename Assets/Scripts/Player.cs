@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
 	public  int survival=3;
 	public  int exploration=3;
 	public  int might=3;
+	public int max_cards=6;
 	int moves;
 	public ArrayList inventory = new ArrayList();
 	public bool isActive=false;
