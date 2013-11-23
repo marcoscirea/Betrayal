@@ -12,11 +12,30 @@ public class Options2 : MonoBehaviour {
 	}
 	
 	void OnMouseUpAsButton () {
-		if (new_card){
-			world.activePlayer().endTurn();
-			new_card=false;
+		switch (this.transform.FindChild("New Text").GetComponent<TextMesh>().text){
+		case "flee":
+			// theplayer tries to flee
+			Player p = world.activePlayer();
+			if (Random.value >  1f/p.exploration){
+				Debug.Log("Player flees");
+			}
+			else{
+				Debug.Log("player loses");
+				p.emptyInventory();
+				Destroy(p.equipped);
+				p.equipped=null;
+			}
+			p.endTurn();
+			break;
+
+		default:
+			if (new_card){
+				world.activePlayer().endTurn();
+				new_card=false;
+			}
+			else
+				world.options.SetActive(false);
+			break;
 		}
-		else
-			world.options.SetActive(false);
 	}
 }

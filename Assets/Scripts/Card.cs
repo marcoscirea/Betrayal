@@ -225,6 +225,7 @@ public class Card : MonoBehaviour {
 			break;
 		case "trouble":
 			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="fight";
+			world.options.transform.FindChild("Opt2").transform.FindChild("New Text").GetComponent<TextMesh>().text="flee";
 			break;
 		case "machine":
 			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="activate";
