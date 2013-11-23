@@ -14,6 +14,7 @@ public class World : MonoBehaviour {
 	public Deck deck;
 	bool startingCards=true;
 	public Transform center;
+	public GameObject monster;
 
 	public bool machinePresent = false;
 
@@ -54,6 +55,9 @@ public class World : MonoBehaviour {
 		options = GameObject.Find("Options");
 		options.transform.position=GameObject.Find("Status").transform.position + new Vector3(0,2,-2);
 		options.SetActive(false);
+
+		//initialize monster
+		monster = GameObject.Find("Monster");
 	}
 	
 	// Update is called once per frame

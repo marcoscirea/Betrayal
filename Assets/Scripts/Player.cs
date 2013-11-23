@@ -74,7 +74,7 @@ public class Player : MonoBehaviour {
 
 		refresh();
 
-		endTurn();
+		//endTurn();
 
 		deck.locked= false;
 	}
@@ -95,10 +95,11 @@ public class Player : MonoBehaviour {
 		next_player.updateStatus();
 		moves=exploration;
 		wait=false;
+		world.monster.SetActive(false);
 		world.options.SetActive(false);
 	}
 
-	void refresh(){
+	 public void refresh(){
 		//reorder cards 
 		for (int i=0; i< inventory.Count; i++){
 			GameObject tmp = (GameObject) inventory[i];
@@ -170,5 +171,12 @@ public class Player : MonoBehaviour {
 		world.options.transform.FindChild("Opt1").renderer.material=world.activePlayer().renderer.material;
 		world.options.transform.FindChild("Opt2").renderer.material=world.activePlayer().renderer.material;
 		world.options.transform.FindChild("Opt3").renderer.material=world.activePlayer().renderer.material;
+	}
+
+	public void emptyInventory(){
+		foreach (GameObject c in inventory){
+			Destroy(c);
+		}
+		inventory = new ArrayList();
 	}
 }

@@ -25,6 +25,7 @@ public class Card : MonoBehaviour {
 	public Sprite hospital;
 	public Sprite house;
 	public Sprite machine;
+	public Monster monster = null;
 
 	// Use this for initialization
 	void Start () {
@@ -73,6 +74,7 @@ public class Card : MonoBehaviour {
 
 				world.activePlayer().moveTo(transform, x,y);
 
+				world.options.transform.FindChild("Opt1").GetComponent<Options1>().new_card=true;
 				world.options.transform.FindChild("Opt2").GetComponent<Options2>().new_card=true;
 
 				//Srop player from moving when on new tile if there are options
@@ -91,6 +93,11 @@ public class Card : MonoBehaviour {
 		if (on && type_on){
 			activateOptions(type);
 		}
+
+		if (monster!=null){
+			monster.show();
+		}
+		
 	}
 
 	public void isHome(){
@@ -168,6 +175,7 @@ public class Card : MonoBehaviour {
 				//text.SetActive(true);
 				type_obj.GetComponent<SpriteRenderer>().sprite=badlands;
 				type_obj.SetActive(true);
+				monster= new Monster();
 			}
 			else {
 				//machine
