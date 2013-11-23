@@ -22,7 +22,10 @@ public class Options1 : MonoBehaviour {
 			// if the player is stronger it wins
 			Player p = world.activePlayer();
 			Card c = world.cards[p.x,p.y].GetComponent<Card>();
-			if (p.might >  c.monster.value){
+			int might = p.might;
+			if (p.equipped!=null)
+				might += p.equipped.GetComponent<Item>().value--;
+			if (might >  c.monster.value){
 				Debug.Log("Player wins");
 				world.deck.giveCards(p, c.monster.value);
 				c.monster=null;
@@ -30,6 +33,8 @@ public class Options1 : MonoBehaviour {
 			else{
 				Debug.Log("player loses");
 				p.emptyInventory();
+				Destroy(p.equipped);
+				p.equipped=null;
 			}
 			break;
 		case "activate":

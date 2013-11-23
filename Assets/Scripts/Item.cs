@@ -21,14 +21,20 @@ public class Item : MonoBehaviour {
 		}
 		else {
 			//card is equipment
-			type= "eqip";
+			type= "equip";
 			randomEquipment();
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (value==0) {
+			Player p = GameObject.Find(player).GetComponent<Player>();
+			if (p.isActive)
+				p.equipped=null;
+
+			Destroy(this.gameObject);
+		}
 	}
 
 	void OnMouseUpAsButton () {

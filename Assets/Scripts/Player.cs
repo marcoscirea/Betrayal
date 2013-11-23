@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
 	public int y;
 	GameObject status;
 	public bool wait =false;
-	Item equipped;
+	public GameObject equipped;
 
 	// Use this for initialization
 	void Start () {
@@ -66,6 +66,14 @@ public class Player : MonoBehaviour {
 	void Update () {
 		
 		spotlight.SetActive(isActive);
+
+		if (equipped!=null){
+			equipped.transform.position= status.transform.position + new Vector3(1.5f,0,0);
+			if (isActive)
+				equipped.SetActive(true);
+			else
+				equipped.SetActive(false);
+		}
 	}
 
 	public void takeItem(GameObject item){
@@ -82,11 +90,25 @@ public class Player : MonoBehaviour {
 
 	public void useItem(GameObject item){
 		//Debug.Log("remove");
-		inventory.Remove(item);
 
-		Destroy(item);
+		if (item.GetComponent<Item>().type=="equip"){
+			if (equipped!= null){
+				Destroy(equipped);
+				equipped=null;
+			}
+			equipped=item;
 
-		refresh ();
+			inventory.Remove(item);
+
+			refresh ();
+		}
+		else {
+			inventory.Remove(item);
+
+			Destroy(item);
+
+			refresh ();
+		}
 	}
 
 	public void endTurn(){
