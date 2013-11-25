@@ -63,6 +63,9 @@ public class Player : MonoBehaviour {
 		status=GameObject.Find("Status");
 
 		moves= exploration;
+
+		//Stats init (1-5 with not less 7)
+		statsInit();
 	}
 	
 	// Update is called once per frame
@@ -257,5 +260,13 @@ public class Player : MonoBehaviour {
 			return true;
 		else
 			return false;
+	}
+
+	void statsInit() {
+		exploration = (int) Random.Range(1,6);
+		survival = (int) Random.Range(1,6);
+		might = (int) Random.Range(1,6);
+		if (exploration+might+survival<7)
+			statsInit();
 	}
 }
