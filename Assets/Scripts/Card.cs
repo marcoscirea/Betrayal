@@ -29,10 +29,17 @@ public class Card : MonoBehaviour {
 	public Sprite machine;
 	public Monster monster = null;
 
+	Vector3 original_position;
+	Vector3 original_scale;
+	bool scale = true;
+
 	// Use this for initialization
 	void Start () {
 		world = GameObject.Find("World").GetComponent<World>();
 		type_obj = gameObject.transform.FindChild("Type").gameObject;
+
+		original_position=transform.position;
+		original_scale=transform.localScale;
 	}
 	
 	// Update is called once per frame
@@ -43,6 +50,7 @@ public class Card : MonoBehaviour {
 			type_obj.SetActive(true);
 		}
 
+		scaleDown();
 	}
 
 	void OnMouseUpAsButton () {
@@ -222,6 +230,7 @@ public class Card : MonoBehaviour {
 		switch (type){
 		case "scav":
 			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="scavenge";
+			world.options.transform.FindChild("Opt2").transform.FindChild("New Text").GetComponent<TextMesh>().text="continue";
 			break;
 		case "trouble":
 			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="fight";
@@ -229,7 +238,43 @@ public class Card : MonoBehaviour {
 			break;
 		case "machine":
 			world.options.transform.FindChild("Opt1").transform.FindChild("New Text").GetComponent<TextMesh>().text="activate";
+			world.options.transform.FindChild("Opt2").transform.FindChild("New Text").GetComponent<TextMesh>().text="continue";
 			break;
+		}
+	}
+
+	void OnMouseEnter() {
+		if (on){
+			transform.position += new Vector3(0,0,-3);
+			scale=false;
+			//transform.localScale += new Vector3(1,1,0);
+		}
+	}
+
+	void OnMouseExit() {
+		transform.position=original_position;
+		//transform.localScale = original_scale;
+		scale=true;
+	}
+
+	void OnMouseOver(){
+		if (on){
+				if (transform.position==original_position){
+					transform.position += new Vector3(0,0,-3);
+				scale=false;
+			}
+				if (transform.localScale.x <= original_scale.x + 1)
+					transform.localScale += new Vector3(1,1,0)*Time.deltaTime;
+		}
+	}
+
+	void scaleDown(){
+		if (scale){
+			if (transform.localScale.x > original_scale.x){
+				transform.localScale -= new Vector3(1,1,0)*Time.deltaTime;
+			}
+			else
+				transform.localScale=original_scale;
 		}
 	}
 }

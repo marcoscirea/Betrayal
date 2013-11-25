@@ -13,6 +13,10 @@ public class Item : MonoBehaviour {
 	int[,] equipment_data = { {2,2}, {3,2} };
 	public Material gear;
 
+	Vector3 original_position;
+	Vector3 original_scale;
+	bool scale = true;
+
 	// Use this for initialization
 	void Start () {
 		float v = Random.value;
@@ -36,6 +40,8 @@ public class Item : MonoBehaviour {
 				uses = 1;
 			}
 		}
+
+		original_scale=transform.localScale;
 	}
 	
 	// Update is called once per frame
@@ -47,6 +53,8 @@ public class Item : MonoBehaviour {
 
 			Destroy(this.gameObject);
 		}
+
+		scaleDown();
 	}
 
 	void OnMouseUpAsButton () {
@@ -85,5 +93,40 @@ public class Item : MonoBehaviour {
 		
 		value = equipment_data[i,0];
 		uses=equipment_data[i,1];
+	}
+
+	void OnMouseEnter() {
+		original_scale=transform.localScale;
+		original_position=transform.position;
+		transform.position += new Vector3(0,0,-3);
+		//transform.localScale += new Vector3(1,1,0);
+		scale=false;
+	}
+	
+	void OnMouseExit() {
+		transform.position=original_position;
+		//transform.localScale = original_scale;
+		scale=true;
+	}
+	
+	void OnMouseOver(){
+		if (transform.position==original_position){
+			original_scale=transform.localScale;
+			original_position=transform.position;
+			transform.position += new Vector3(0,0,-3);
+			scale=false;
+		}
+			if (transform.localScale.x <= original_scale.x + 1)
+				transform.localScale += new Vector3(1,1,0)*Time.deltaTime;
+		}
+
+	void scaleDown(){
+		if (scale){
+			if (transform.localScale.x > original_scale.x){
+				transform.localScale -= new Vector3(1,1,0)*Time.deltaTime;
+			}
+			else
+				transform.localScale=original_scale;
+		}
 	}
 }
