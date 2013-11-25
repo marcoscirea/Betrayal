@@ -96,7 +96,6 @@ public class Item : MonoBehaviour {
 	}
 
 	void OnMouseEnter() {
-		original_scale=transform.localScale;
 		original_position=transform.position;
 		transform.position += new Vector3(0,0,-3);
 		//transform.localScale += new Vector3(1,1,0);
@@ -111,7 +110,6 @@ public class Item : MonoBehaviour {
 	
 	void OnMouseOver(){
 		if (transform.position==original_position){
-			original_scale=transform.localScale;
 			original_position=transform.position;
 			transform.position += new Vector3(0,0,-3);
 			scale=false;

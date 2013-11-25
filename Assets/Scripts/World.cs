@@ -22,6 +22,7 @@ public class World : MonoBehaviour {
 	//monster sprites and values
 	public Sprite[] monster_sprites;
 	public int[] monster_values;
+	public string[] monster_names;
 
 	// Use this for initialization
 	void Start () {

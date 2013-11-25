@@ -171,15 +171,14 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void moveTo(Transform tr, float nx, float ny){
-		moveTo(tr, (int)nx, (int)ny);
+	public void moveTo(Transform tr, float nx, float ny, bool new_card){
+		moveTo(tr, (int)nx, (int)ny, new_card);
 	}
 
-	public void moveTo(Transform tr, int nx, int ny){
-
+	public void moveTo(Transform tr, int nx, int ny, bool new_card){
 		x=nx;
 		y=ny;
-
+		
 		if (gameObject.name=="P1"){
 			transform.position = tr.position + new Vector3(-0.25f, 0.25f,-1f);
 		}
@@ -192,12 +191,16 @@ public class Player : MonoBehaviour {
 		if (gameObject.name=="P4"){
 			transform.position = tr.position + new Vector3(-0.25f, -0.25f,-1f);
 		}
-
+		
 		moves--;
-		if(moves==0){
+		if(!new_card && moves==0){
 			moves=exploration;
 			endTurn();
 		}
+	}
+	public void moveTo(Transform tr, int nx, int ny){
+		moveTo(tr, nx, ny, false);
+
 	}
 
 	public void updateStatus(){

@@ -82,7 +82,7 @@ public class Card : MonoBehaviour {
 
 				setType();
 
-				world.activePlayer().moveTo(transform, x,y);
+				world.activePlayer().moveTo(transform, x,y,true);
 
 				world.options.transform.FindChild("Opt1").GetComponent<Options1>().new_card=true;
 				world.options.transform.FindChild("Opt2").GetComponent<Options2>().new_card=true;
