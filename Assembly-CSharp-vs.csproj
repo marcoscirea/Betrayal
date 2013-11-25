@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Deck.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
      <Compile Include="Assets\Scripts\Monster.cs" />
+     <Compile Include="Assets\Scripts\MonsterZoom.cs" />
      <Compile Include="Assets\Scripts\Options1.cs" />
      <Compile Include="Assets\Scripts\Options2.cs" />
      <Compile Include="Assets\Scripts\Options3.cs" />
