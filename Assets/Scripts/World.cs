@@ -43,6 +43,8 @@ public class World : MonoBehaviour {
 		GameObject.Find("Main Camera").transform.position= new Vector3(side/2, side/2, -10f);
 		deck = GameObject.Find("Deck").GetComponent<Deck>();
 
+		GameObject.Find("Table").transform.position = new Vector3(side/2, side/2, 1f);
+
 		//put players on home
 		p1= GameObject.Find("P1").GetComponent<Player>();
 		p1.moveTo(cards[(int)side/2, (int)side/2].transform, (int)side/2, (int)side/2);
