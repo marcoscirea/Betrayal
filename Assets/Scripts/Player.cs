@@ -198,7 +198,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void updateStatus(){
-		Debug.Log(name + " update status");
+		//Debug.Log(name + " update status");
 		status.renderer.material=renderer.material;
 		status.transform.FindChild("Name").GetComponent<TextMesh>().text=name;
 		status.transform.FindChild("Exploration").GetComponent<TextMesh>().text="Expl: "+exploration;

@@ -19,6 +19,10 @@ public class World : MonoBehaviour {
 
 	public bool machinePresent = false;
 
+	//monster sprites and values
+	public Sprite[] monster_sprites;
+	public int[] monster_values;
+
 	// Use this for initialization
 	void Start () {
 		cards = new GameObject[side,side];
@@ -59,6 +63,7 @@ public class World : MonoBehaviour {
 
 		//initialize monster
 		monster = GameObject.Find("Monster");
+		monster.SetActive(false);
 
 		//find the food gui
 		food_gui = GameObject.Find("Food").GetComponent<TextMesh>();

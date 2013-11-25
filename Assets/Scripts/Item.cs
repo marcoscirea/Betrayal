@@ -32,7 +32,7 @@ public class Item : MonoBehaviour {
 				randomEquipment();
 			}
 			else {
-				Debug.Log("gear appears");
+				//Debug.Log("gear appears");
 				//card is gear
 				type="gear";
 				renderer.material= gear;
