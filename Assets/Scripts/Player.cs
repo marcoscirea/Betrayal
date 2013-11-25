@@ -218,10 +218,11 @@ public class Player : MonoBehaviour {
 
 	public void isHungry(){
 		if (food<=0){
+			food = 0;
 			wait=true;
 			hungry = true;
 			//Debug.Log(name + " is hungry");
-			if (inventory.Count == 0 && Random.value < 0.5f)
+			if (noFood() && Random.value < 0.5f)
 				food = 2;
 		}
 		else {
@@ -230,5 +231,29 @@ public class Player : MonoBehaviour {
 				hungry= false;
 			}
 		}
+	}
+
+	public bool hasGears(int n){
+		int count = 0;
+		foreach (GameObject c in inventory){
+			if (c.GetComponent<Item>().type=="gear")
+				count++;
+		}
+		if (count >= n)
+			return true;
+		else
+			return false;
+	}
+
+	public bool noFood(){
+		int count = 0;
+		foreach (GameObject c in inventory){
+			if (c.GetComponent<Item>().type=="food")
+				count++;
+		}
+		if (count==0)
+			return true;
+		else
+			return false;
 	}
 }

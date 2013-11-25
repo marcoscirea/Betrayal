@@ -11,18 +11,30 @@ public class Item : MonoBehaviour {
 	int[] food_data = {1,1,1,1,1};
 	public Material[] equipment = new Material[2];
 	int[,] equipment_data = { {2,2}, {3,2} };
+	public Material gear;
 
 	// Use this for initialization
 	void Start () {
-		if (Random.value <=0.7){
+		float v = Random.value;
+		if (v <= 0.6){
 			//card is food
 			type= "food";
 			randomFood();
 		}
 		else {
-			//card is equipment
-			type= "equip";
-			randomEquipment();
+			if ( v <= 0.85f ){
+				//card is equipment
+				type= "equip";
+				randomEquipment();
+			}
+			else {
+				Debug.Log("gear appears");
+				//card is gear
+				type="gear";
+				renderer.material= gear;
+				value = 1;
+				uses = 1;
+			}
 		}
 	}
 	
@@ -38,9 +50,11 @@ public class Item : MonoBehaviour {
 	}
 
 	void OnMouseUpAsButton () {
-		Player p = GameObject.Find(player).GetComponent<Player>();
-		if (p.isActive)
-			p.useItem(gameObject);
+		if (type != "gear"){
+			Player p = GameObject.Find(player).GetComponent<Player>();
+			if (p.isActive)
+				p.useItem(gameObject);
+		}
 	}
 
 	void randomFood(){

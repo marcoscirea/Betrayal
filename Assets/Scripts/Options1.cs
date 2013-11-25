@@ -12,10 +12,14 @@ public class Options1 : MonoBehaviour {
 	}
 	
 	void OnMouseUpAsButton () {
+		
+		Player p1 = world.activePlayer();
+		Card c1 = world.cards[p1.x,p1.y].GetComponent<Card>();
 		//Debug.Log("button1");
 		switch (this.transform.FindChild("New Text").GetComponent<TextMesh>().text){
 		case "scavenge":
 			world.deck.giveCards(world.activePlayer(), (int) world.activePlayer().survival/2);
+			c1.expired=true;
 			//world.activePlayer().endTurn();
 			break;
 		case "fight":
@@ -29,6 +33,7 @@ public class Options1 : MonoBehaviour {
 				Debug.Log("Player wins");
 				world.deck.giveCards(p, c.monster.value);
 				c.monster=null;
+				c1.expired=true;
 			}
 			else{
 				Debug.Log("player loses");
@@ -38,12 +43,13 @@ public class Options1 : MonoBehaviour {
 			}
 			break;
 		case "activate":
+			if (world.activePlayer().hasGears(2)){
+				Debug.Log(world.activePlayer().name + " has won!");
+			}
 			//world.activePlayer().endTurn();
 			break;
 		}
-		Player p1 = world.activePlayer();
-		Card c1 = world.cards[p1.x,p1.y].GetComponent<Card>();
-		c1.expired=true;
+
 		world.activePlayer().endTurn();
 		world.options.SetActive(false);
 	}
