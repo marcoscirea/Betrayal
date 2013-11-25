@@ -37,9 +37,9 @@ public class Player : MonoBehaviour {
 
 		spotlight = transform.FindChild("Spotlight").gameObject;
 
-		if(gameObject.name=="P1"){
+		/*if(gameObject.name=="P1"){
 			isActive=true;
-		}
+		}*/
 
 		//set next_player
 		if (gameObject.name=="P1"){
@@ -83,6 +83,7 @@ public class Player : MonoBehaviour {
 		if (isActive){
 			world.food_gui.text = "Food: "+food;
 		}
+
 	}
 
 	public void takeItem(GameObject item){
@@ -197,6 +198,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void updateStatus(){
+		Debug.Log(name + " update status");
 		status.renderer.material=renderer.material;
 		status.transform.FindChild("Name").GetComponent<TextMesh>().text=name;
 		status.transform.FindChild("Exploration").GetComponent<TextMesh>().text="Expl: "+exploration;

@@ -68,6 +68,7 @@ public class World : MonoBehaviour {
 	void Update () {
 		if (activePlayer()==null){
 			//activate player 1
+			//Debug.Log("activate first player");
 			p1.isActive=true;
 			p1.updateStatus();
 		}
