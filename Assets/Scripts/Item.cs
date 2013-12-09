@@ -17,6 +17,8 @@ public class Item : MonoBehaviour {
 	Vector3 original_scale;
 	bool scale = true;
 
+	GameObject back;
+
 	// Use this for initialization
 	void Start () {
 		float v = Random.value;
@@ -42,6 +44,8 @@ public class Item : MonoBehaviour {
 		}
 
 		original_scale=transform.localScale;
+
+		back=transform.FindChild("Back").gameObject;
 	}
 	
 	// Update is called once per frame
@@ -126,5 +130,17 @@ public class Item : MonoBehaviour {
 			else
 				transform.localScale=original_scale;
 		}
+	}
+
+	public void show(){
+		back.SetActive(false);
+		//back.renderer.enabled=false;
+		//back.transform.position += new Vector3(0,0,10f);
+	}
+
+	public void cover(){
+		back.SetActive(true);
+		//back.renderer.enabled=true;
+		//back.transform.position -= new Vector3(0,0,10f);
 	}
 }

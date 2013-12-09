@@ -74,12 +74,12 @@ public class World : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (activePlayer()==null){
+		/*if (activePlayer()==null){
 			//activate player 1
 			//Debug.Log("activate first player");
 			p1.isActive=true;
 			p1.updateStatus();
-		}
+		}*/
 
 		if (startingCards) {
 			startingCards=false;

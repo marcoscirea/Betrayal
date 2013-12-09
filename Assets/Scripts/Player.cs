@@ -32,6 +32,8 @@ public class Player : MonoBehaviour {
 	public int food = 2;
 	bool hungry = false;
 
+	Gate gate;
+
 	// Use this for initialization
 	void Start () {
 
@@ -62,10 +64,15 @@ public class Player : MonoBehaviour {
 
 		status=GameObject.Find("Status");
 
+		gate = GameObject.Find("Gate").GetComponent<Gate>();
+
 		moves= exploration;
 
 		//Stats init (1-5 with not less 7)
 		statsInit();
+
+		if (isActive)
+			updateStatus();
 	}
 	
 	// Update is called once per frame
@@ -85,6 +92,17 @@ public class Player : MonoBehaviour {
 
 		if (isActive){
 			world.food_gui.text = "Food: "+food;
+		}
+
+		if (isActive){
+			foreach (GameObject c in inventory){
+				c.GetComponent<Item>().show();
+			}
+		}
+		else {
+			foreach (GameObject c in inventory){
+				c.GetComponent<Item>().cover();
+			}
 		}
 
 	}
@@ -129,9 +147,12 @@ public class Player : MonoBehaviour {
 	public void endTurn(){
 		//Debug.Log("next turn");
 		isActive=false;
-		next_player.isActive=true;
-		//next_player.isHungry();
-		next_player.updateStatus();
+
+		//activate next player
+		//next_player.isActive=true;
+		gate.activateGate(next_player);
+		//next_player.updateStatus();
+
 		moves=exploration;
 		wait=false;
 		world.monster.SetActive(false);
